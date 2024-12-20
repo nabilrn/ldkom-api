@@ -1,11 +1,20 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/config/config.js')[env];
+const tamuRoutes = require('./route/tamu');
+
+// Middleware to parse JSON bodies
+app.use(express.json());
 
 // Basic route
 app.get('/', (req, res) => {
   res.send('Hello, Express!');
 });
+
+// API routes
+app.use('/api', tamuRoutes);
 
 // Start the server
 app.listen(port, () => {
