@@ -1,4 +1,3 @@
-// filepath: /c:/API/ldkom-api/seeders/20241220180000-seed-alasan.js
 'use strict';
 
 module.exports = {
