@@ -1,18 +1,13 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class PicketSchedule extends Model {
+  class PicketSchedules extends Model {
     static associate(models) {
-      // Define associations
-      PicketSchedule.belongsToMany(models.Assistant, {
-        through: models.AssistantPicket,
-        foreignKey: 'id_picket',
-      });
-      PicketSchedule.hasMany(models.Attendance, { foreignKey: 'id_picket' });
+      PicketSchedules.hasMany(models.AssistantPickets, { foreignKey: 'id_picket' });
+      PicketSchedules.hasMany(models.Attendances, { foreignKey: 'id_picket' });
     }
   }
-
-  PicketSchedule.init(
+  PicketSchedules.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -22,17 +17,27 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       day: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(255),
         allowNull: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'created_at',
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'updated_at',
       },
     },
     {
       sequelize,
-      modelName: 'PicketSchedule',
-      tableName: 'picket_schedule',
-      timestamps: false,
+      modelName: 'PicketSchedules',
+      tableName: 'picketschedules',
+      timestamps: true,
     }
   );
 
-  return PicketSchedule;
+  return PicketSchedules;
 };

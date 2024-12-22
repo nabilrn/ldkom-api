@@ -1,9 +1,13 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/config/config.js')[env];
 const tamuRoutes = require('./route/tamu');
+
+// Use CORS middleware
+app.use(cors());
 
 // Middleware to parse JSON bodies
 app.use(express.json());

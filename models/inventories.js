@@ -3,10 +3,9 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Inventories extends Model {
     static associate(models) {
-      // Define associations here if needed
+      // define association here if needed
     }
   }
-
   Inventories.init(
     {
       id: {
@@ -17,15 +16,15 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       nama_barang: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(100),
         allowNull: false,
       },
       merk: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false,
       },
       kode_barang: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(100),
         allowNull: false,
       },
       kondisi_baik: {
@@ -44,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       satuan: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(20),
       },
       catatan: {
         type: DataTypes.TEXT,
@@ -52,10 +51,12 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
+        field: 'created_at',
       },
       updatedAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
+        field: 'updated_at',
       },
     },
     {

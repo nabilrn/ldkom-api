@@ -1,45 +1,51 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Attendances', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('attendances', {
       id: {
-        allowNull: false,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        allowNull: false,
+        unique: true,
       },
       id_assistant: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Assistants',
-          key: 'id'
-        }
+          model: 'assistants',
+          key: 'id',
+        },
       },
       id_picket: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'PicketSchedules',
-          key: 'id'
-        }
+          model: 'picketschedules',
+          key: 'id',
+        },
       },
-      day: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      createdAt: {
+      date: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
       },
-      updatedAt: {
+      status: {
+        type: Sequelize.ENUM('present', 'absent'),
         allowNull: false,
-        type: Sequelize.DATE
-      }
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+      },
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Attendances');
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('attendances');
   }
 };

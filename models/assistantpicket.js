@@ -1,13 +1,13 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class AssistantPicket extends Model {
+  class AssistantPickets extends Model {
     static associate(models) {
-      // No direct associations since this is a junction table
+      AssistantPickets.belongsTo(models.Assistants, { foreignKey: 'id_assistant' });
+      AssistantPickets.belongsTo(models.PicketSchedules, { foreignKey: 'id_picket' });
     }
   }
-
-  AssistantPicket.init(
+  AssistantPickets.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'Assistant',
+          model: 'Assistants',
           key: 'id',
         },
       },
@@ -28,18 +28,28 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'PicketSchedule',
+          model: 'PicketSchedules',
           key: 'id',
         },
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'created_at',
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'updated_at',
       },
     },
     {
       sequelize,
-      modelName: 'AssistantPicket',
-      tableName: 'assistant_picket',
-      timestamps: false,
+      modelName: 'AssistantPickets',
+      tableName: 'assistantpickets',
+      timestamps: true,
     }
   );
 
-  return AssistantPicket;
+  return AssistantPickets;
 };

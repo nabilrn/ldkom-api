@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('alasan', {
+    await queryInterface.createTable('artikel', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -10,9 +10,25 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      reason: {
+      judul: {
         type: Sequelize.STRING(255),
         allowNull: false,
+      },
+      deskripsi: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      gambar: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
+      id_assistant: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'assistants',
+          key: 'id',
+        },
       },
       created_at: {
         type: Sequelize.DATE,
@@ -26,6 +42,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('alasan');
+    await queryInterface.dropTable('artikel');
   }
 };

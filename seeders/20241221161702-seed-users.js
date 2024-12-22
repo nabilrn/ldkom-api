@@ -1,10 +1,10 @@
 'use strict';
-const bcrypt = require('bcrypt');
 
-/** @type {import('sequelize-cli').Migration} */
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const saltRounds = 10;
     const users = [
       { username: 'Jefril', password: 'jefril', role: 'pembina labor' },
       { username: 'nabil', password: 'nabil', role: 'assistant' },
@@ -23,15 +23,15 @@ module.exports = {
       users.map(async user => ({
         ...user,
         password: await bcrypt.hash(user.password, saltRounds),
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       }))
     );
 
-    await queryInterface.bulkInsert('Users', hashedUsers, {});
+    await queryInterface.bulkInsert('users', hashedUsers, {});
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Users', null, {});
+    await queryInterface.bulkDelete('users', null, {});
   }
 };

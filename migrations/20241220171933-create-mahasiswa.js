@@ -1,30 +1,37 @@
-// filepath: /c:/API/ldkom-api/migrations/20241220171933-create-mahasiswa.js
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('mahasiswa', {
       id: {
-        allowNull: false,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        allowNull: false,
+        unique: true,
       },
       name: {
         type: Sequelize.STRING(255),
-        allowNull: false
+        allowNull: false,
       },
       nim: {
         type: Sequelize.STRING(255),
-        allowNull: false
+        allowNull: false,
+        unique: true,
       },
-      total_visits: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      }
+      
+      created_at: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+      },
     });
   },
-  async down(queryInterface, Sequelize) {
+
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('mahasiswa');
   }
 };

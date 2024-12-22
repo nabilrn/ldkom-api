@@ -1,10 +1,8 @@
-// filepath: /c:/API/ldkom-api/models/alasan.js
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Alasan extends Model {
     static associate(models) {
-      // define association here
       Alasan.hasMany(models.Kunjungan, { foreignKey: 'reason' });
     }
   }
@@ -21,12 +19,22 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
+      createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'created_at',
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'updated_at',
+      },
     },
     {
       sequelize,
       modelName: 'Alasan',
       tableName: 'alasan',
-      timestamps: false,
+      timestamps: true,
     }
   );
 

@@ -1,19 +1,15 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Assistant extends Model {
+  class Assistants extends Model {
     static associate(models) {
-      // Define associations
-      Assistant.belongsToMany(models.PicketSchedule, {
-        through: models.AssistantPicket,
-        foreignKey: 'id_assistant',
-      });
-      Assistant.hasMany(models.Attendance, { foreignKey: 'id_assistant' });
-      Assistant.hasOne(models.Users, { foreignKey: 'assistant_id' });
+      Assistants.hasMany(models.AssistantPickets, { foreignKey: 'id_assistant' });
+      Assistants.hasMany(models.Attendances, { foreignKey: 'id_assistant' });
+      Assistants.hasMany(models.Artikel, { foreignKey: 'id_assistant' });
+      Assistants.hasMany(models.Kas, { foreignKey: 'id_assistant' });
     }
   }
-
-  Assistant.init(
+  Assistants.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -23,21 +19,32 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
       id_num: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(255),
         allowNull: false,
+        unique: true,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'created_at',
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'updated_at',
       },
     },
     {
       sequelize,
-      modelName: 'Assistant',
-      tableName: 'assistant',
-      timestamps: false,
+      modelName: 'Assistants',
+      tableName: 'assistants',
+      timestamps: true,
     }
   );
 
-  return Assistant;
+  return Assistants;
 };

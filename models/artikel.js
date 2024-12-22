@@ -1,13 +1,12 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Kunjungan extends Model {
+  class Artikel extends Model {
     static associate(models) {
-      Kunjungan.belongsTo(models.Mahasiswa, { foreignKey: 'id_mhs' });
-      Kunjungan.belongsTo(models.Alasan, { foreignKey: 'reason' });
+      Artikel.belongsTo(models.Assistants, { foreignKey: 'id_assistant' });
     }
   }
-  Kunjungan.init(
+  Artikel.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -16,25 +15,25 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
-      id_mhs: {
-        type: DataTypes.INTEGER,
+      judul: {
+        type: DataTypes.STRING(255),
         allowNull: false,
+      },
+      deskripsi: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      gambar: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      id_assistant: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
         references: {
-          model: 'Mahasiswa',
+          model: 'Assistants',
           key: 'id',
         },
-      },
-      reason: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Alasan',
-          key: 'id',
-        },
-      },
-      date: {
-        type: DataTypes.DATE,
-        allowNull: false,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -49,11 +48,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Kunjungan',
-      tableName: 'kunjungan',
+      modelName: 'Artikel',
+      tableName: 'artikel',
       timestamps: true,
     }
   );
 
-  return Kunjungan;
+  return Artikel;
 };

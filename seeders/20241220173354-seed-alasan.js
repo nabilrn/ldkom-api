@@ -3,10 +3,10 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('alasan', [
-      { reason: 'Belajar' },
-      { reason: 'Bimbingan' },
-      { reason: 'Ngeprint' },
-      { reason: 'Hosting' },
+      { reason: 'Belajar', created_at: new Date(), updated_at: new Date() },
+      { reason: 'Bimbingan', created_at: new Date(), updated_at: new Date() },
+      { reason: 'Ngeprint', created_at: new Date(), updated_at: new Date() },
+      { reason: 'Hosting', created_at: new Date(), updated_at: new Date() },
     ], {});
   },
 

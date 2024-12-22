@@ -3,11 +3,9 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
     static associate(models) {
-      // Define association here
-      Users.belongsTo(models.Assistant, { foreignKey: 'assistant_id' });
+      Users.belongsTo(models.Assistants, { foreignKey: 'assistant_id' });
     }
   }
-
   Users.init(
     {
       id: {
@@ -18,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       username: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false,
         unique: true,
       },
       password: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
       role: {
@@ -34,19 +32,19 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-          model: 'Assistant',
+          model: 'Assistants',
           key: 'id',
         },
-        onUpdate: 'NO ACTION',
-        onDelete: 'SET NULL',
       },
       createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
+        field: 'created_at',
       },
       updatedAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
+        field: 'updated_at',
       },
     },
     {
