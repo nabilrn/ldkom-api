@@ -4,19 +4,16 @@ const createTamu = async (req, res) => {
   const { name, nim, reason } = req.body;
 
   try {
-    // Find or create Mahasiswa
     let mahasiswa = await Mahasiswa.findOne({ where: { nim } });
     if (!mahasiswa) {
       mahasiswa = await Mahasiswa.create({ name, nim });
     }
 
-    // Find Alasan
     const alasan = await Alasan.findOne({ where: { reason } });
     if (!alasan) {
       return res.status(400).json({ error: 'Invalid reason' });
     }
 
-    // Create Kunjungan
     const kunjungan = await Kunjungan.create({
       id_mhs: mahasiswa.id,
       reason: alasan.id,

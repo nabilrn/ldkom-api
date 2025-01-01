@@ -31,6 +31,10 @@ module.exports = {
           key: 'id',
         },
       },
+      refreshtoken: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
