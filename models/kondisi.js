@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Kondisi.hasMany(models.Barang, { foreignKey: 'id_kondisi' });
       Kondisi.hasMany(models.BarangKondisi, { foreignKey: 'id_kondisi' });
+      Kondisi.hasMany(models.Buku, { foreignKey: 'id_kondisi' });
     }
   }
 
@@ -36,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Kondisi',
-    tableName: 'kondisi',
+    tableName: 'kondisis',
     timestamps: true,
   });
   return Kondisi;
